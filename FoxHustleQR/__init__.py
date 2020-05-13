@@ -72,26 +72,27 @@ class QRGenerator:
         logo = logo.resize((width, width), Image.ANTIALIAS)
         end = False
         for y in range(count):
-            start = True
             for x in range(count):
                 if self.code[y][x]:
-                    flag = True
                     worked = True
-                    end = False
-                    if count // 3 - 1 < y < count - count // 3:
+                    end = False; start = False
+                    if count // 3 - 1 < y < count - count // 3 + 1:
                         if x == count // 3 - 1:
                             end = True
-                            flag = False
                         if x == count - count // 3:
                             start = True
-                            flag = False
                         if count // 3 - 1 < x < count - count // 3:
                             worked = False
-                    if flag:
-                        if x+1 < count:
-                            end = bool(self.code[y][x+1]) == False
+                    if not end:
+                        if x+1 <count:
+                            end = not bool(self.code[y][x+1])
                         else:
                             end = True
+                    if not start:
+                        if x > 0:
+                            start = not bool(self.code[y][x-1])
+                        else:
+                            start = True
                     if worked:
                         if end:
                             idraw.ellipse((10+10*x, 10+10*y, 20+10*x, 20+10*y), fill=color3)
