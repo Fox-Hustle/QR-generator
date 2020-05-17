@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw
 import sys
 import requests
 from io import BytesIO
+import os
 
 
 class QR:
@@ -16,10 +17,17 @@ class QR:
 
 class QRGenerator:
     def __init__(self):
-        self.logo1 = Image.open(BytesIO(requests.get("https://psv4.userapi.com/c856328/u367833544/docs/d11/fdfcbc346497/logotype_colored_light.png?extra=Qc3JtSLjXuFXd7MPkLnpZPB3J0sV7PUGADI4zGgV8AYmQJnDzgJCmj6bpWfnF885shZUKNTsjFcTgWR8-EC2oefRgVnPAohA-MvNi6AM8iMZIzCGJ_FoEzgOlsGkylvpLZhfKVMj4TCGWIUkqJo6S6Nt").content))
-        self.logo2 = Image.open(BytesIO(requests.get("https://psv4.userapi.com/c856328/u367833544/docs/d12/40f94d0618dd/logotype_colored_dark.png?extra=K8LBG-GWsdOCwrsslcJzSDLKPd6tKqNm-ocusEDGN4gowdEtnFCHjPXelwRHekOGfbfjtEiyD-lhZxaj4wTCoYk1C4MhIcDhBNZlQzwuIREUR0EPxLlx9xGaPyV9vjkjwrbmCo2pHAdGBhVVyFNtClND").content))
-        self.logo3 = Image.open(BytesIO(requests.get("https://psv4.userapi.com/c856328/u367833544/docs/d10/d91b80f9e850/logotype_mono_dark.png?extra=PWTanj3At0sM4YLMbLQIxp3hz8-Ikq5MYilSr6vFPMeZ7FB3BdUIH60K5EuyVxyd3BgjoPJz315d3zeGCGQEt6v3tBDqrr61QCEMczVnakTLod3AOtE6K6pHPHGUWdk9eRC2TTigzo_KASY_S1YVzTkg").content))
-        self.logo4 = Image.open(BytesIO(requests.get("https://psv4.userapi.com/c856328/u367833544/docs/d14/90ef293f0f10/logotype_mono_white.png?extra=UWH25ftBEIATmlBpAfPkPo4MMWPldDnUnhPp3zQD-Arkfr5EBGpfs95dSvLb_ltnQNa_3u2D_pXVywGsaoHShPlwEcZKj6oKR5PGuH63mciT6BC0PDg2V653Du6JXUT-o39rRttY_UA_yt_G9XD9OFFu").content))
+        self.logo1 = self.save("logotype_colored_light.png", error_link="https://sun9-25.userapi.com/c857736/v857736023/1f5a8a/1Gb4ZfJA3uM.jpg")
+        self.logo2 = self.save("logotype_colored_dark.png", error_link="https://sun9-51.userapi.com/c857736/v857736023/1f5a82/NLbM6ye2fnU.jpg")
+        self.logo3 = self.save("logotype_mono_dark.png", error_link="https://sun9-22.userapi.com/c857736/v857736023/1f5a92/x1hQySIyfUk.jpg")
+        self.logo4 = self.save("logotype_mono_white.png", error_link="https://sun9-5.userapi.com/c857736/v857736023/1f5a9a/PMGzJcIn2QI.jpg")
+    def save(self, name, error_link=""):
+        dir_ = os.getcwd()
+        os.chdir(__path__[0]+"\\images")
+        res = Image.open(name)
+        os.chdir(dir_)
+        del dir_
+        return res
     def __call__(self, url, version=None, qr="colored light", encoding="utf8"):
         if qr == "colored light":
             color1 = "black"
@@ -52,7 +60,7 @@ class QRGenerator:
             463, 513, 537, 595, 627, 660, 700, 744, 792, 844, 900,
             960, 985, 1053, 1095, 1141, 1221, 1275]
         _length = len(url)
-        if count[-1]<_length:
+        if count[-1] < _length:
             raise ValueError("Text length must be lower by \"{count}\"".format(count=count[-1]-1))
         _version = 0
         for number, _ in enumerate(count):
@@ -76,7 +84,7 @@ class QRGenerator:
                 if self.code[y][x]:
                     worked = True
                     end = False; start = False
-                    if count // 3 - 1 < y < count - count // 3 + 1:
+                    if count // 3 - 1 < y < count - count // 3:
                         if x == count // 3 - 1:
                             end = True
                         if x == count - count // 3:
@@ -143,4 +151,4 @@ class QRGenerator:
 
 __all__ = ['QRGenerator']
 
-__version__ = '0.4'
+__version__ = '1.3'

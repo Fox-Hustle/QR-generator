@@ -13,5 +13,3 @@ if __name__ == "__main__":
     QRGenerator("https://foxhustle.ru", qr="colored dark").save("link2.png")
     QRGenerator("https://foxhustle.ru", qr="mono dark").save("link3.png")
     QRGenerator("https://foxhustle.ru", qr="mono white").save("link4.png")
-
-    QRGenerator("https://foxhustle.ru", qr="colored light", version=9).save("link1_9.png")
