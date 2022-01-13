@@ -14,7 +14,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     install_requires=[
-        'Pillow==8.2.0', 
+        'Pillow==9.0.0', 
         'PyQRCode==1.2.1',
         'requests==2.23.0',
     ], 
