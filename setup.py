@@ -16,7 +16,7 @@ setup(
     install_requires=[
         'Pillow==8.2.0', 
         'PyQRCode==1.2.1',
-        'requests==2.23.0',
+        'requests==2.31.0',
     ], 
     python_requires='>=3.6',
     )
